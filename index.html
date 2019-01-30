@@ -13,15 +13,23 @@
 
 <body>
 
-    <!-- This is for all pre-created and user-generated buttons -->
-    <div id="buttonsArea"></div>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Gifs Galore!</h1>
+            <p>Use a pre-defined button below, or search for a term to create a new button!</p>
+        </div>
+    </div>
 
     <!-- Form to allow user to search for terms and create new buttons as a result of the search -->
-    <form id="search-form">
-        <label for="search-input">What are you looking for today?</label>
-        <input type="text" id="search-input"><br>
-        <input type="submit" value="Submit">
+
+    <form class="form-group row" id="search-form">
+        <label class="col-sm-4 col-sm-offset-4 text-center text-primary" for="search-input">What are you looking for today?</label>
+        <input class="col-sm-4 col-sm-offset-4 text-center" type="text" id="search-input" class="form-control"><br><br>
+        <input class="col-sm-4 col-sm-offset-4 text-center" id="addSearch" type="submit" value="Submit">
     </form>
+
+    <!-- This is for all pre-created and user-generated buttons -->
+    <div class= "panel panel-default col-sm-4 col-sm-offset-4 text-center" id="buttonsArea"></div>
 
     <!-- This is where the GIF search results will appear -->
     <div id="searches"></div>

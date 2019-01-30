@@ -34,30 +34,49 @@ $(function() {
     $(document).on('click', '.searchButton', function () {
         $('#searches').empty();
         var type = $(this).data('type');
-        var queryURL = 'http://api.giphy.com/v1/gifs/search?q='+type+'&api_key=K0SOL7kG9qKDhnNtILgDDhCtGD70yTV5&limit=10';
+        var queryURL = 'https://api.giphy.com/v1/gifs/search?q='+ type + '&api_key=dc6zaTOxFJmzC&limit=10';
         $.ajax({
             url : queryURL, 
             method: 'GET',
         })
-        .done(function(response){
-            for(var i=0; i<response.data.length; i++) { // loop through the array
-                var searchDiv = $('<div class="search-item>');
+        .done(function(response) {
+            for (var i=0; i < response.data.length; i++) { // loop through the array
+                var searchDiv = $('<div class="search-item">');
                 var rating = response.data[i].rating;  // store the rating that is shown to the user
-                var p = $('<p>').text('Rating: ' +rating);
+                var p = $('<p>').text('Rating: ' + rating);
                 var animated = response.data[i].images.fixed_height.url; // to reference the API response when moving
                 var still = response.data[i].images.fixed_height_still.url; // to reference the API response to be responsive to being still
                 var image = $('<img>');
                 image.attr('src', still);
-                image.attr('data-still', still):
+                image.attr('data-still', still);
                 image.attr('data-animated', animated);
                 image.attr('data-state', 'still');
                 image.addClass('searchImage');
                 searchDiv.append(p); // identify rating of the gif
                 searchDiv.append(image);
-                $('#searches').append(searchDiv); -- 1720
-        
+                $('#searches').append(searchDiv);
             } 
         })
+    })
+
+    // use jQuery to enable gif animation on user click
+    $(document).on('click', '.searchImage', function() {
+        var state = $(this).attr('data-state'); // assign still or animated state
+        if (state == 'still') {
+            $(this).attr('src', $(this).data('animated'));
+            $(this).attr('data-state', 'animated');
+        } else {
+            $(this).attr('src', $(this).data('still'));
+            $(this).attr('data-state', 'still');            
+        }
+    })
+
+    // user jQuery to enable user input in text box to add new buttons
+    $('#addSearch').on('click', function () {
+        var newSearch = $('input').eq(0).val(); // store first version of user input in textbox as a var
+        searchArray.push(newSearch);  // add to our search array
+        populateButtons(searchArray,'searchButton', '#buttonsArea');
+        return false; // stops the page from re-loading on submit
     })
 
 // MAIN OPERATIONS
